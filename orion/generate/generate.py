@@ -80,15 +80,30 @@ def generate_radar_svg(avant: dict, apres: dict, size: int = 500) -> str:
 # ──────────────────────────── Mermaid → SVG ────────────────────────────
 
 
+def _npx_available() -> bool:
+    """Vérifie si npx est disponible."""
+    try:
+        subprocess.run(["npx", "--version"], capture_output=True, timeout=5)
+        return True
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return False
+
+
 def render_mermaid_diagrams(competences: dict) -> dict[str, str]:
     """Rend les diagrammes Mermaid en SVG via npx mmdc. Retourne {Cx: svg_string}."""
     diagrams = {}
 
-    for key, comp in competences.items():
-        mermaid_code = comp.get("diagram_mermaid")
-        if not mermaid_code:
-            continue
+    # Collecter les compétences avec un diagramme
+    to_render = {k: v["diagram_mermaid"] for k, v in competences.items() if v.get("diagram_mermaid")}
+    if not to_render:
+        return diagrams
 
+    if not _npx_available():
+        print("  npx non disponible — les diagrammes Mermaid seront ignorés.", file=sys.stderr)
+        print("  Installe Node.js pour activer le rendu des diagrammes.", file=sys.stderr)
+        return diagrams
+
+    for key, mermaid_code in to_render.items():
         with tempfile.NamedTemporaryFile(mode="w", suffix=".mmd", delete=False) as f_in:
             f_in.write(mermaid_code)
             mmd_path = Path(f_in.name)
@@ -107,22 +122,24 @@ def render_mermaid_diagrams(competences: dict) -> dict[str, str]:
                 ],
                 capture_output=True,
                 text=True,
-                timeout=30,
+                timeout=60,
             )
 
             if result.returncode != 0:
-                print(f"  Attention: Mermaid a échoué pour {key}: {result.stderr[:200]}", file=sys.stderr)
+                print(f"  Attention : Mermaid a échoué pour {key}: {result.stderr[:200]}", file=sys.stderr)
                 continue
 
             if svg_path.exists():
                 svg_content = svg_path.read_text(encoding="utf-8")
-                # Nettoyer les en-têtes XML si présents
                 if "<svg" in svg_content:
                     svg_content = svg_content[svg_content.index("<svg"):]
                 diagrams[key] = svg_content
                 print(f"  {key} : diagramme rendu")
             else:
-                print(f"  Attention: pas de SVG généré pour {key}", file=sys.stderr)
+                print(f"  Attention : pas de SVG généré pour {key}", file=sys.stderr)
+
+        except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+            print(f"  Attention : rendu {key} ignoré ({type(e).__name__})", file=sys.stderr)
 
         finally:
             mmd_path.unlink(missing_ok=True)
@@ -227,11 +244,9 @@ def preflight():
             print("  playwright install chromium", file=sys.stderr)
         sys.exit(1)
 
-    # Vérifie npx (pour Mermaid)
-    result = subprocess.run(["which", "npx"], capture_output=True)
-    if result.returncode != 0:
-        print("npx non trouvé. Installe Node.js pour le rendu des diagrammes Mermaid.", file=sys.stderr)
-        print("Les diagrammes seront ignorés.", file=sys.stderr)
+    if not _npx_available():
+        print("Note : npx non trouvé. Les diagrammes Mermaid seront ignorés.", file=sys.stderr)
+        print("  Installe Node.js pour activer le rendu des diagrammes.", file=sys.stderr)
 
 
 # ──────────────────────────── Main ────────────────────────────

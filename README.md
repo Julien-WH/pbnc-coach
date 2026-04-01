@@ -6,12 +6,17 @@ Compagnon IA pour préparer le **Passeport Certification** et le **Grand Oral** 
 
 ### Pré-requis
 
-Un CLI d'agent IA installé :
+**Pour l'interview et le coaching :** un CLI d'agent IA :
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (`claude`)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli) (`gemini`)
 - [GitHub Copilot CLI](https://githubnext.com/projects/copilot-cli) (`gh copilot`)
 - [Codex CLI](https://github.com/openai/codex) (`codex`)
 - Ou tout autre CLI qui lit `CLAUDE.md`, `GEMINI.md` ou `AGENTS.md`
+
+**Pour l'export PDF** (Orion te guidera au moment voulu) :
+- Python 3.10+ avec `pip install -r orion/generate/requirements.txt`
+- Playwright + Chromium : `playwright install chromium`
+- Node.js/npx (optionnel, pour les diagrammes Mermaid sur C3/C17)
 
 ### Lancer
 

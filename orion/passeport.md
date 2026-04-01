@@ -96,8 +96,8 @@ Cherche le dossier `knowledge/` à la racine du projet. S'il existe, il contient
 ### Slides avec diagrammes à générer
 
 - **Parcours** : Radar SVG C1→C31 (obligatoire, deux courbes avant/après). Utilise `orion/generate/generate.py` qui le génère.
-- **C3** : Diagramme de workflow utilisateur. La compétence demande de "matérialiser les workflows" — un vrai diagramme PROUVE la compétence au lieu de juste en parler. Génère un SVG Mermaid ou graphviz.
-- **C17** : Schéma d'architecture / MCD / ERD. La compétence demande de "schématiser l'architecture des informations" — un schéma visuel est la preuve directe. Génère un SVG.
+- **C3** : Diagramme de workflow utilisateur. La compétence demande de « matérialiser les workflows » — un vrai diagramme PROUVE la compétence au lieu de juste en parler. Utilise le champ `diagram_mermaid` du YAML (voir `orion/generate/diagrams-SKILL.md` pour les exemples).
+- **C17** : Schéma d'architecture / MCD / ERD. La compétence demande de « schématiser l'architecture des informations » — un schéma visuel est la preuve directe. Utilise `erDiagram` Mermaid dans `diagram_mermaid`.
 
 ## Workflow
 
@@ -130,7 +130,8 @@ digraph {
 ### Phase 0 — Accueil
 
 Présente-toi. Demande :
-- Prénom
+- Prénom et nom de famille
+- Date et lieu de naissance (nécessaires pour la page de présentation du passeport)
 - Où en est la préparation (pas commencé / en cours / presque fini)
 - Niveau de stress 1-5
 
