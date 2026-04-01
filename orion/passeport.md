@@ -65,58 +65,26 @@ Cherche le dossier `knowledge/` à la racine du projet. S'il existe, il contient
 | Présentation orale (démonstration, expériences, temps, clarté, liberté) | 10 |
 | Entretien jury (pertinence, argumentation, recul, interaction) | 10 |
 
-### Structure du Passeport
-1. **Présentation** (1 diapo) : identité + certification
-2. **Parcours** (2 diapos max) : parcours + schéma radar 31 compétences avant/après
-3. **Activités professionnelles** (3 diapos max) : 3 activités détaillées
-4. **31 compétences** (1 diapo chacune)
-5. **Conclusion** (1 diapo)
-6. **Ouverture** (1 diapo)
+### Structure du Passeport (39 slides max)
 
-## Référentiel des 31 compétences
+| Section | Nb slides | Visuel |
+|---------|:---------:|--------|
+| Présentation | 1 | — |
+| Parcours | 2 max | **Radar C1-C31 obligatoire** |
+| Activités professionnelles | 3 max | — |
+| Compétences C1-C31 | 31 (1 chacune) | **C3 : workflow**, **C17 : ERD** |
+| Conclusion | 1 | — |
+| Ouverture | 1 | — |
 
-### Bloc 1 — Concevoir des solutions no-code selon les besoins utilisateurs
+## Référentiel complet
 
-- **C1** : Déterminer les besoins/habitudes des utilisateurs (diversité, handicap, âges) via collecte d'information
-- **C2** : Auditer l'existant (documentation, processus, contraintes techniques/légales/humaines/financières)
-- **C3** : Matérialiser les workflows utilisateurs (Miro, Lucidchart) pour identifier processus à optimiser via no-code/IA
-- **C4** : Formuler des hypothèses de solutions inclusives, rédiger CdC fonctionnel et technique
-- **C5** : Structurer un processus de veille informationnelle (Slack, Teams, Notion, IA générative)
-- **C6** : Définir les fonctionnalités du produit no-code (RGPD, EU AI Act, accessibilité)
-- **C7** : Choisir les technologies et élaborer le budget prévisionnel
+**IMPORTANT :** Pour les intitulés RNCP exacts, les questions-guides mot pour mot, et les directives de chaque slide, lis `reference/slides-referentiel.md`. C'est l'extraction verbatim du PDF Oreegami. Utilise ces intitulés exacts quand tu rédiges le contenu des slides.
 
-### Bloc 2 — Conduire le projet de développement d'un produit numérique no-code
+### Slides avec diagrammes à générer
 
-- **C8** : Créer une roadmap projet accessible (Asana, Monday), méthodes agiles
-- **C9** : Arbitrer la répartition des coûts sur le budget global
-- **C10** : Définir des KPIs quantitatifs et qualitatifs pour piloter
-- **C11** : Constituer une équipe projet inclusive, cartographier les compétences
-- **C12** : Collaborer via note de cadrage et outils collaboratifs (Teams, Slack)
-- **C13** : Résoudre les conflits avec techniques adaptées au public
-- **C14** : Évaluer les risques (matrice 5x5), plan de prévention
-- **C15** : Identifier et analyser les causes profondes des incidents (diagramme Ishikawa, méthode des 5 Pourquoi)
-- **C16** : Rédiger rapports d'avancement FR/EN, communication FALC
-
-### Bloc 3 — Personnaliser et déployer des technologies no-code et IA générative
-
-- **C17** : Schématiser l'architecture (MCD/ERD), normes de sécurité
-- **C18** : Concevoir des agents IA (contexte, prompts, plateformes LLM)
-- **C19** : Implémenter modèle de données et règles métiers (Airtable, Notion, Supabase)
-- **C20** : Créer des workflows d'automatisation (Make, Zapier, N8n), API IA
-- **C21** : Concevoir procédure de tests systématique, parcours utilisateurs inclusifs
-- **C22** : Élaborer maquette fonctionnelle inclusive (Figma, Sketch)
-- **C23** : Reproduire la maquette dans le produit no-code (Softr, Bubble)
-
-### Bloc 4 — Pérennité du produit no-code
-
-- **C24** : Concevoir guide d'utilisation inclusif (FALC, visuels)
-- **C25** : Rédiger documentation technique inclusive (flux, interactions, paramétrages)
-- **C26** : Piloter sessions de formation adaptées aux publics
-- **C27** : Concevoir dispositif de collecte de données (Tickets, Tracking)
-- **C28** : Déterminer méthodes qualité (Lean, Six Sigma), feuille de route évolution
-- **C29** : Définir support utilisateur inclusif (canaux, SLA)
-- **C30** : Déterminer structure équipe support inclusive
-- **C31** : Concevoir tableaux de bord de suivi support (KPIs)
+- **Parcours** : Radar SVG C1→C31 (obligatoire, deux courbes avant/après). Utilise `orion/generate/generate.py` qui le génère.
+- **C3** : Diagramme de workflow utilisateur. La compétence demande de "matérialiser les workflows" — un vrai diagramme PROUVE la compétence au lieu de juste en parler. Génère un SVG Mermaid ou graphviz.
+- **C17** : Schéma d'architecture / MCD / ERD. La compétence demande de "schématiser l'architecture des informations" — un schéma visuel est la preuve directe. Génère un SVG.
 
 ## Workflow
 
