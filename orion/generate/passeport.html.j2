@@ -2,14 +2,13 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Passeport de Certification — {{ candidat.prenom }} {{ candidat.nom }}</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   {# ============ COVER ============ #}
-  <div class="page cover">
+  <div class="slide cover">
     <h1>Passeport de<br>Certification</h1>
     <div class="subtitle">Product Builder No-Code</div>
     <div class="candidate-info">
@@ -20,40 +19,39 @@
   </div>
 
   {# ============ PARCOURS ============ #}
-  <div class="page">
+  <div class="slide">
     <div class="section-header">
       <div class="section-number">1</div>
       <h2>Mon parcours</h2>
     </div>
 
-    <div class="parcours-section">
-      <h3>Parcours scolaire et extra-scolaire</h3>
-      <p>{{ parcours.scolaire }}</p>
+    <div class="parcours-grid">
+      <div class="parcours-section">
+        <h3>Parcours scolaire</h3>
+        <p>{{ parcours.scolaire }}</p>
+      </div>
+      <div class="parcours-section">
+        <h3>Parcours professionnel</h3>
+        <p>{{ parcours.professionnel }}</p>
+      </div>
+      <div class="parcours-section">
+        <h3>Motivations</h3>
+        <p>{{ parcours.motivations }}</p>
+      </div>
+      <div class="parcours-section">
+        <h3>Projet professionnel</h3>
+        <p>{{ parcours.projet_pro }}</p>
+      </div>
     </div>
 
-    <div class="parcours-section">
-      <h3>Parcours professionnel</h3>
-      <p>{{ parcours.professionnel }}</p>
-    </div>
-
-    <div class="parcours-section">
-      <h3>Motivations pour la certification</h3>
-      <p>{{ parcours.motivations }}</p>
-    </div>
-
-    <div class="parcours-section">
-      <h3>Projet professionnel</h3>
-      <p>{{ parcours.projet_pro }}</p>
-    </div>
-
-    <div class="page-footer">
+    <div class="slide-footer">
       <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
       <span>RNCP40677</span>
     </div>
   </div>
 
   {# ============ RADAR ============ #}
-  <div class="page">
+  <div class="slide">
     <div class="section-header">
       <div class="section-number">2</div>
       <h2>Acquisition des compétences</h2>
@@ -68,20 +66,22 @@
       <div class="legend-item"><div class="dot apres"></div> Après la formation</div>
     </div>
 
-    <div class="page-footer">
+    <div class="slide-footer">
       <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
       <span>RNCP40677</span>
     </div>
   </div>
 
-  {# ============ ACTIVITÉS ============ #}
-  <div class="page">
+  {# ============ ACTIVITÉS (1 slide par activité) ============ #}
+  {% for act in activites %}
+  <div class="slide">
+    {% if loop.first %}
     <div class="section-header">
       <div class="section-number">3</div>
       <h2>Mes activités professionnelles</h2>
     </div>
+    {% endif %}
 
-    {% for act in activites %}
     <div class="activity">
       <h3>Activité {{ loop.index }} — {{ act.titre }}</h3>
       <div class="field-grid">
@@ -117,7 +117,7 @@
       <div class="reflection">
         <div class="label">Réflexion & axes d'amélioration</div>
         <p>{{ act.reflexion }}</p>
-        <p class="mt-4">{{ act.axes_amelioration }}</p>
+        <p class="mt-2">{{ act.axes_amelioration }}</p>
       </div>
       {% if act.competences_couvertes %}
       <div class="tags">
@@ -127,15 +127,15 @@
       </div>
       {% endif %}
     </div>
-    {% endfor %}
 
-    <div class="page-footer">
+    <div class="slide-footer">
       <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
-      <span>RNCP40677</span>
+      <span>Activité {{ loop.index }} · RNCP40677</span>
     </div>
   </div>
+  {% endfor %}
 
-  {# ============ COMPÉTENCES — 1 page par compétence ============ #}
+  {# ============ COMPÉTENCES — 1 slide par compétence ============ #}
   {% set blocs = [
     {"num": "1", "titre": "Concevoir des solutions no-code", "ids": [1, 2, 3, 4, 5, 6, 7]},
     {"num": "2", "titre": "Conduire le projet de développement", "ids": [8, 9, 10, 11, 12, 13, 14, 15, 16]},
@@ -147,7 +147,8 @@
   {% for i in bloc.ids %}
   {% set key = "C" ~ i %}
   {% if key in competences %}
-  <div class="page">
+  {% set has_diagram = key in diagrams_svg %}
+  <div class="slide">
     <div class="bloc-header">
       <span class="bloc-tag">Bloc {{ bloc.num }}</span>
       <h3>{{ bloc.titre }}</h3>
@@ -157,21 +158,36 @@
       <span class="competence-id">{{ key }}</span>
       <h4>{{ competences[key].titre }}</h4>
 
-      <div class="competence-field">
-        <div class="label">Exemple concret</div>
-        <p>{{ competences[key].exemple }}</p>
+      {% if has_diagram %}
+      <div class="competence-layout">
+        <div class="competence-text">
+      {% endif %}
+
+          <div class="competence-field">
+            <div class="label">Exemple concret</div>
+            <p>{{ competences[key].exemple }}</p>
+          </div>
+          <div class="competence-field">
+            <div class="label">Outils & méthodes</div>
+            <p>{{ competences[key].outils }}</p>
+          </div>
+          <div class="competence-field">
+            <div class="label">Réflexion & recul</div>
+            <p>{{ competences[key].reflexion }}</p>
+          </div>
+
+      {% if has_diagram %}
+        </div>
+        <div class="competence-diagram">
+          <div class="diagram-container">
+            {{ diagrams_svg[key] }}
+          </div>
+        </div>
       </div>
-      <div class="competence-field">
-        <div class="label">Outils & méthodes</div>
-        <p>{{ competences[key].outils }}</p>
-      </div>
-      <div class="competence-field">
-        <div class="label">Réflexion & recul</div>
-        <p>{{ competences[key].reflexion }}</p>
-      </div>
+      {% endif %}
     </div>
 
-    <div class="page-footer">
+    <div class="slide-footer">
       <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
       <span>{{ key }} · RNCP40677</span>
     </div>
@@ -181,7 +197,7 @@
   {% endfor %}
 
   {# ============ CONCLUSION ============ #}
-  <div class="page">
+  <div class="slide">
     <div class="section-header">
       <div class="section-number">8</div>
       <h2>Conclusion</h2>
@@ -191,14 +207,14 @@
       <p>{{ conclusion }}</p>
     </div>
 
-    <div class="page-footer">
+    <div class="slide-footer">
       <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
       <span>RNCP40677</span>
     </div>
   </div>
 
   {# ============ OUVERTURE ============ #}
-  <div class="page">
+  <div class="slide">
     <div class="section-header">
       <div class="section-number">9</div>
       <h2>Ouverture</h2>
@@ -219,7 +235,7 @@
       </div>
     </div>
 
-    <div class="page-footer">
+    <div class="slide-footer">
       <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
       <span>RNCP40677</span>
     </div>

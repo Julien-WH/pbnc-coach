@@ -84,7 +84,8 @@
             "titre": { "type": "string", "description": "Intitulé court de la compétence" },
             "exemple": { "type": "string", "description": "Exemple concret démontrant l'acquisition" },
             "outils": { "type": "string", "description": "Outils et méthodes utilisés" },
-            "reflexion": { "type": "string", "description": "Recul et analyse personnelle" }
+            "reflexion": { "type": "string", "description": "Recul et analyse personnelle" },
+            "diagram_mermaid": { "type": "string", "description": "Code Mermaid optionnel (flowchart, erDiagram, etc.) — rendu en SVG sur la slide" }
           }
         }
       },
