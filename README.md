@@ -6,6 +6,15 @@ Compagnon IA pour préparer le **Passeport Certification** et le **Grand Oral** 
 
 ## Si tu es un humain
 
+### Pré-requis
+
+Un CLI d'agent IA installé, au choix :
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — `claude`
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli) — `gemini`
+- [Cursor](https://cursor.com) — ouvrir le dossier dans Cursor
+- [Codex CLI](https://github.com/openai/codex) — `codex`
+- Tout CLI qui lit `CLAUDE.md`, `GEMINI.md` ou `AGENTS.md`
+
 ### Lancer
 
 ```bash
@@ -13,7 +22,7 @@ cd pbnc-coach
 claude        # ou gemini, cursor, codex, etc.
 ```
 
-Orion se présente et te guide. Pas besoin de lire le reste.
+Orion se présente et te guide.
 
 ### Deux modes
 
@@ -26,48 +35,64 @@ Orion se présente et te guide. Pas besoin de lire le reste.
 
 Tout est sauvegardé dans `workspace/{ton_prenom}/`. Tu peux quitter et reprendre plus tard.
 
-### Pré-requis
+### Setup de l'export PDF (si tu veux le faire toi-même)
 
-Un CLI d'agent IA installé, au choix :
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — `claude`
-- [Gemini CLI](https://github.com/google-gemini/gemini-cli) — `gemini`
-- [Cursor](https://cursor.com) — ouvrir le dossier dans Cursor
-- [Codex CLI](https://github.com/openai/codex) — `codex`
-- Tout CLI qui lit `CLAUDE.md`, `GEMINI.md` ou `AGENTS.md`
+L'IA peut s'en charger pour toi (voir section suivante), mais si tu préfères le faire manuellement :
 
-L'export PDF nécessite des outils supplémentaires. Orion te guidera au moment voulu, ou tu peux demander à l'IA de les installer (voir section suivante).
+```bash
+# 1. Environnement Python local (ne touche pas à ton système)
+python3 -m venv .venv
+.venv/bin/pip install -r orion/generate/requirements.txt
+
+# 2. Navigateur pour l'export PDF
+.venv/bin/playwright install chromium
+
+# 3. Diagrammes Mermaid (optionnel, nécessite Node.js)
+#    Si npx est déjà installé, rien à faire.
+#    Sinon les diagrammes C3/C17 seront ignorés — pas bloquant.
+npx --version  # vérifie si c'est déjà là
+```
+
+Pour générer le PDF une fois le passeport rédigé :
+```bash
+.venv/bin/python orion/generate/generate.py workspace/{prenom}/answers.yaml
+```
 
 ---
 
 ## Si tu es une IA
 
-Tu viens d'être lancé dans ce projet. Voici comment te mettre en route.
+Tu viens d'être lancé dans ce projet. Voici comment préparer l'environnement de l'utilisateur.
 
-### 1. Vérifier l'environnement
+### 1. Diagnostiquer l'environnement
 
-Exécute ces vérifications **une seule fois, au premier lancement**. Ne réinstalle rien qui est déjà présent.
+Exécute ces commandes **en parallèle** pour diagnostiquer ce qui est déjà installé. Ne lance rien d'autre avant d'avoir les résultats.
 
 ```bash
-# Python
-python3 --version  # besoin de 3.10+
-
-# Dépendances Python (venv local au projet, non invasif)
-test -d .venv || python3 -m venv .venv
-.venv/bin/pip install -q -r orion/generate/requirements.txt
-
-# Playwright + Chromium (seulement si pas déjà installé)
-.venv/bin/python -c "from playwright.sync_api import sync_playwright; sync_playwright().start().chromium.launch().close(); print('OK')" 2>/dev/null \
-  || .venv/bin/playwright install chromium
-
-# Node/npx (optionnel — pour les diagrammes Mermaid C3/C17)
-which npx >/dev/null 2>&1 && echo "npx OK" || echo "npx absent — les diagrammes seront ignorés, pas bloquant"
+python3 --version 2>&1 || echo "ABSENT"
+test -d .venv && echo "venv existe" || echo "venv absent"
+test -d .venv && .venv/bin/python -c "import jinja2, yaml, jsonschema, playwright; print('deps OK')" 2>&1 || echo "deps manquantes"
+which npx 2>/dev/null && npx --version 2>/dev/null || echo "npx absent"
 ```
 
-**Règles :**
-- Utilise un **venv local** (`.venv/`) pour les dépendances Python. Ne fais jamais `pip install` en global.
-- Ne lance `playwright install chromium` que si le check échoue. Chromium fait ~400 Mo.
-- npx est optionnel. Si absent, le PDF se génère quand même, sans les diagrammes Mermaid.
-- N'installe **jamais** Node.js toi-même. Signale juste à l'utilisateur que les diagrammes seront désactivés.
+### 2. Installer ce qui manque (et seulement ce qui manque)
+
+Applique uniquement les étapes nécessaires selon le diagnostic :
+
+| Diagnostic | Action | Commande |
+|------------|--------|----------|
+| Python absent | **Bloquant.** Demande à l'utilisateur d'installer Python 3.10+. Ne l'installe pas toi-même. | — |
+| venv absent | Créer le venv local | `python3 -m venv .venv` |
+| deps manquantes | Installer dans le venv | `.venv/bin/pip install -q -r orion/generate/requirements.txt` |
+| Playwright non fonctionnel | Installer Chromium (~400 Mo) | `.venv/bin/playwright install chromium` |
+| npx absent | **Non bloquant.** Signaler à l'utilisateur que les diagrammes Mermaid (C3, C17) seront désactivés. Ne jamais installer Node toi-même. | — |
+
+**Règles strictes :**
+- **venv local uniquement** (`.venv/`). Jamais `pip install` en global, jamais `sudo`.
+- **Ne réinstalle rien qui est déjà là.** Si le diagnostic dit OK, passe à la suite.
+- **N'installe jamais Python ni Node.** Demande à l'utilisateur.
+- **Playwright Chromium** : ne le lance que si le check d'import échoue. Préviens l'utilisateur du téléchargement (~400 Mo).
+- Ajoute `.venv/` au `.gitignore` s'il n'y est pas déjà.
 
 ### 2. Lire les instructions
 
