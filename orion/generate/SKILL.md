@@ -6,12 +6,14 @@ Appelé par Orion (mode passeport) quand toutes les compétences sont couvertes 
 
 ## Pré-requis
 
-```bash
-pip install -r orion/generate/requirements.txt
-playwright install chromium
-```
+Vérifie l'environnement en suivant les instructions de la section « Si tu es une IA » du README.md. En résumé :
 
-Si les dépendances ne sont pas installées, propose à l'apprenant de les installer et guide-le.
+| Outil | Obligatoire | Commande |
+|-------|:-----------:|----------|
+| Python 3.10+ | oui | — (demander à l'utilisateur si absent) |
+| venv + deps | oui | `.venv/bin/pip install -r orion/generate/requirements.txt` |
+| Playwright + Chromium | oui | `.venv/bin/playwright install chromium` |
+| Node.js / npx | non | Pour les diagrammes Mermaid (C3, C17). Si absent, le PDF est généré sans diagrammes. |
 
 ## Workflow
 
@@ -64,7 +66,26 @@ competences:
     exemple: "..."
     outils: "..."
     reflexion: "..."
-  # ... C1 à C31
+  C3:
+    titre: "Matérialiser les workflows utilisateurs"
+    exemple: "..."
+    outils: "Miro, Lucidchart"
+    reflexion: "..."
+    diagram_mermaid: |      # optionnel — rendu en SVG sur la slide
+      flowchart LR
+          A[Demande client] --> B{Type}
+          B -->|Simple| C[Traitement auto]
+          B -->|Complexe| D[Analyse manuelle]
+  C17:
+    titre: "Schématiser l'architecture des informations"
+    exemple: "..."
+    outils: "..."
+    reflexion: "..."
+    diagram_mermaid: |      # optionnel — rendu en SVG sur la slide
+      erDiagram
+          UTILISATEUR ||--o{ PROJET : cree
+          PROJET ||--|{ TACHE : contient
+  # ... C1 à C31 (diagram_mermaid est optionnel sur toutes)
 
 conclusion: "..."
 

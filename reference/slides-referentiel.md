@@ -1,7 +1,8 @@
 # Référentiel des slides du Passeport Certification PBNC
 
-Extraction mot pour mot du PDF Kick-Off Grand Oral Oreegami.
-Chaque section indique le nombre de slides autorisé et la directive exacte (sur fond gris dans le PDF).
+Extraction du PDF Kick-Off Grand Oral Oreegami. Chaque section indique le nombre de slides autorisé et la directive exacte (sur fond gris dans le PDF).
+
+**Gouvernance :** Ce fichier est un verbatim du PDF sauf mention contraire. Les passages marqués « RECONSTRUCTION » sont des enrichissements issus de la fiche RNCP40677 et des cours, pas du PDF original. Voir `reference/SOURCES.md` pour la hiérarchie des sources.
 
 ---
 
@@ -131,9 +132,10 @@ Questions-guides :
 - Comment construisez-vous votre matrice de risques pour un projet no-code ?
 - Quel plan de prévention mettez-vous en place pour anticiper les principaux obstacles identifiés ?
 
-**C15** (1 diapositive) — **Note : absent du kick-off PDF mais présent dans le RNCP et l'infographie Bloc 2 ("Diagramme Ishikawa (incidents)")**
-Intitulé RNCP (reconstitué) : « C15. Identifier et analyser les causes profondes des incidents en utilisant le diagramme d'Ishikawa et la méthode des 5 Pourquoi pour éviter le traitement des seuls symptômes. »
-Questions-guides :
+**C15** (1 diapositive) — **⚠ RECONSTRUCTION — absent du kick-off PDF**
+Source : fiche RNCP40677 + infographie Bloc 2 du kick-off (« Diagramme Ishikawa (incidents) ») + cours chapitre 03 séquence 2 (piège du symptôme, 6 catégories Ishikawa, mise en situation).
+Intitulé reconstitué : « C15. Identifier et analyser les causes profondes des incidents en utilisant le diagramme d'Ishikawa et la méthode des 5 Pourquoi pour éviter le traitement des seuls symptômes. »
+Questions-guides (reconstituées) :
 - Comment remontez-vous à la cause racine d'un incident plutôt que de traiter le symptôme ?
 - Quels outils d'analyse causale (Ishikawa, 5 Pourquoi) utilisez-vous et dans quel contexte ?
 
