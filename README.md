@@ -37,15 +37,20 @@ Tout est dans `workspace/{ton_prenom}/`. Tu peux quitter et reprendre plus tard,
 
 ```
 pbnc-coach/
-├── CLAUDE.md                  # Instructions Claude Code
-├── GEMINI.md                  # Instructions Gemini CLI
-├── AGENTS.md                  # Instructions Codex / autres CLI
-├── .copilot-instructions.md   # Instructions GitHub Copilot
-├── agents/
+├── orion/                     # Cerveau d'Orion (source de vérité unique)
 │   ├── passeport.md           # Comportement mode Passeport
-│   └── oral.md                # Comportement mode Oral
+│   ├── oral.md                # Comportement mode Oral
+│   └── generate/              # Pipeline de génération PDF
+│       ├── generate.py        # YAML → Jinja2 → Playwright → PDF
+│       ├── passeport.html.j2  # Template structure
+│       ├── style.css          # Style visuel
+│       └── answers.schema.json
+├── .claude/skills/            # Skills projet-scoped (Claude Code)
+├── .cursor/skills/            # Skills projet-scoped (Cursor)
+├── .gemini/commands/          # Commands (Gemini CLI)
+├── CLAUDE.md                  # Point d'entrée (+ GEMINI.md, AGENTS.md, etc.)
 ├── knowledge/                 # Cours de formation (ne pas modifier)
-│   ├── MAPPING-COMPETENCES.md # Index cours → compétences
+│   ├── MAPPING-COMPETENCES.md # Index cours → compétences C1-C31
 │   ├── PBNC-CDP-S2-Bloc1/    # Bloc 1: Concevoir (C1-C7)
 │   └── PBNC-CDP-S2-Bloc2/    # Bloc 2: Conduire (C8-C16)
 ├── reference/                 # Documents de référence

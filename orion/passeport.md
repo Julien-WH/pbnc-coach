@@ -94,6 +94,7 @@ Cherche le dossier `knowledge/` à la racine du projet. S'il existe, il contient
 - **C12** : Collaborer via note de cadrage et outils collaboratifs (Teams, Slack)
 - **C13** : Résoudre les conflits avec techniques adaptées au public
 - **C14** : Évaluer les risques (matrice 5x5), plan de prévention
+- **C15** : Identifier et analyser les causes profondes des incidents (diagramme Ishikawa, méthode des 5 Pourquoi)
 - **C16** : Rédiger rapports d'avancement FR/EN, communication FALC
 
 ### Bloc 3 — Personnaliser et déployer des technologies no-code et IA générative

@@ -23,7 +23,8 @@
 | **C12** Collaboration / cadrage | Chap 02 - Leadership inclusif | S2: gouvernance (L06), doc cadrage (L07), kick-off (L08), rituels (L09), outils collab (L10) |
 | **C13** Résolution conflits | Chap 02 - Leadership inclusif | S3: communication assertive (L11), méthode SARDE (L12), médiation express (L13) |
 | **C14** Matrice risques | Chap 03 - Reporting & risques | S1: pourquoi risques (L02), matrice 5x5 (L03), 4 stratégies (L04) |
-| **C16** Reporting FR/EN FALC | Chap 03 - Reporting & risques | S2-S3: 6 catégories (L06), comm bilingue (L09), pitch investor (L10) |
+| **C15** Analyse causes profondes (Ishikawa) | Chap 03 - Reporting & risques | S2: piège du symptôme (L05), 6 catégories Ishikawa (L06), mise en situation (L07) |
+| **C16** Reporting FR/EN FALC | Chap 03 - Reporting & risques | S3: comm bilingue (L09), pitch investor (L10) |
 
 ## Blocs 3-4 — Pas de cours e-learning disponibles
 
@@ -32,7 +33,7 @@ Les compétences C17-C31 (déploiement technique, IA, pérennité) ne sont pas c
 ## Navigation rapide
 
 - **Un étudiant bloque sur C1 (besoins)** → `PBNC-CDP-S2-Bloc1/module-01-detecteur-besoins/` séquence 1
-- **Un étudiant bloque sur C4 (inclusivité)** → `PBNC-CDP-S2-Bloc1/module-01-detecteur-besoins/08-s1-gestion-diversite.md` + `PBNC-CDP-S2-Bloc1/module-02-cahier-charges-vivant/` séquence 4
+- **Un étudiant bloque sur C4 (inclusivité)** → `PBNC-CDP-S2-Bloc1/module-01-detecteur-besoins/08-s1-gestion-diversite-publics.md` + `PBNC-CDP-S2-Bloc1/module-02-cahier-charges-vivant/` séquence 4
 - **Un étudiant bloque sur C9 (budget)** → `PBNC-CDP-S2-Bloc2/chapitre-01-espace-pilotage/05-s2-budget-boussole.md`
 - **Un étudiant bloque sur C13 (conflits)** → `PBNC-CDP-S2-Bloc2/chapitre-02-leadership-inclusif/12-s3-methode-sarde.md`
 - **Un étudiant bloque sur C14 (risques)** → `PBNC-CDP-S2-Bloc2/chapitre-03-reporting-risques/03-s1-matrice-5x5.md`

@@ -109,10 +109,15 @@ def load_and_validate(yaml_path: Path, schema_path: Path) -> dict:
 
 def render_html(data: dict, template_dir: Path) -> str:
     """Rend le template Jinja2 avec les données."""
-    env = Environment(loader=FileSystemLoader(str(template_dir)))
+    env = Environment(
+        loader=FileSystemLoader(str(template_dir)),
+        autoescape=True,
+    )
     template = env.get_template("passeport.html.j2")
 
-    radar_svg = generate_radar_svg(data["radar"]["avant"], data["radar"]["apres"])
+    from markupsafe import Markup
+
+    radar_svg = Markup(generate_radar_svg(data["radar"]["avant"], data["radar"]["apres"]))
 
     return template.render(radar_svg=radar_svg, **data)
 
@@ -147,12 +152,49 @@ async def export_pdf(html_content: str, css_path: Path, output_path: Path):
     print(f"PDF généré : {output_path}")
 
 
+def preflight():
+    """Vérifie que toutes les dépendances sont disponibles."""
+    missing = []
+    for pkg in ["yaml", "jsonschema", "jinja2", "markupsafe"]:
+        try:
+            __import__(pkg)
+        except ImportError:
+            missing.append(pkg)
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        missing.append("playwright")
+
+    if missing:
+        print("Dépendances manquantes :", ", ".join(missing), file=sys.stderr)
+        print("Installe-les avec :", file=sys.stderr)
+        print("  pip install -r orion/generate/requirements.txt", file=sys.stderr)
+        if "playwright" not in missing:
+            pass
+        else:
+            print("  playwright install chromium", file=sys.stderr)
+        sys.exit(1)
+
+    # Vérifie que Chromium est installé pour Playwright
+    import subprocess
+    result = subprocess.run(
+        [sys.executable, "-m", "playwright", "install", "--dry-run", "chromium"],
+        capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        print("Chromium n'est pas installé pour Playwright.", file=sys.stderr)
+        print("Installe-le avec : playwright install chromium", file=sys.stderr)
+        sys.exit(1)
+
+
 def main():
     import asyncio
 
     if len(sys.argv) < 2:
         print("Usage: python generate.py <answers.yaml> [output.pdf]")
         sys.exit(1)
+
+    preflight()
 
     yaml_path = Path(sys.argv[1])
     output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else yaml_path.with_suffix(".pdf")

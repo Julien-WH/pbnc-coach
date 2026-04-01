@@ -135,27 +135,28 @@
     </div>
   </div>
 
-  {# ============ COMPÉTENCES ============ #}
+  {# ============ COMPÉTENCES — 1 page par compétence ============ #}
   {% set blocs = [
-    {"num": "1", "titre": "Concevoir des solutions no-code", "range": range(1, 8)},
-    {"num": "2", "titre": "Conduire le projet de développement", "range": [8, 9, 10, 11, 12, 13, 14, 16]},
-    {"num": "3", "titre": "Personnaliser et déployer no-code & IA", "range": range(17, 24)},
-    {"num": "4", "titre": "Pérennité du produit no-code", "range": range(24, 32)}
+    {"num": "1", "titre": "Concevoir des solutions no-code", "ids": [1, 2, 3, 4, 5, 6, 7]},
+    {"num": "2", "titre": "Conduire le projet de développement", "ids": [8, 9, 10, 11, 12, 13, 14, 15, 16]},
+    {"num": "3", "titre": "Personnaliser et déployer no-code & IA", "ids": [17, 18, 19, 20, 21, 22, 23]},
+    {"num": "4", "titre": "Pérennité du produit no-code", "ids": [24, 25, 26, 27, 28, 29, 30, 31]}
   ] %}
 
   {% for bloc in blocs %}
+  {% for i in bloc.ids %}
+  {% set key = "C" ~ i %}
+  {% if key in competences %}
   <div class="page">
-    <div class="section-header">
-      <div class="section-number">{{ loop.index + 3 }}</div>
-      <h2>Bloc {{ bloc.num }} — {{ bloc.titre }}</h2>
+    <div class="bloc-header">
+      <span class="bloc-tag">Bloc {{ bloc.num }}</span>
+      <h3>{{ bloc.titre }}</h3>
     </div>
 
-    {% for i in bloc.range %}
-    {% set key = "C" ~ i %}
-    {% if key in competences %}
-    <div class="competence">
+    <div class="competence" style="border: none; padding: 0;">
       <span class="competence-id">{{ key }}</span>
       <h4>{{ competences[key].titre }}</h4>
+
       <div class="competence-field">
         <div class="label">Exemple concret</div>
         <p>{{ competences[key].exemple }}</p>
@@ -165,18 +166,18 @@
         <p>{{ competences[key].outils }}</p>
       </div>
       <div class="competence-field">
-        <div class="label">Réflexion</div>
+        <div class="label">Réflexion & recul</div>
         <p>{{ competences[key].reflexion }}</p>
       </div>
     </div>
-    {% endif %}
-    {% endfor %}
 
     <div class="page-footer">
       <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
-      <span>RNCP40677</span>
+      <span>{{ key }} · RNCP40677</span>
     </div>
   </div>
+  {% endif %}
+  {% endfor %}
   {% endfor %}
 
   {# ============ CONCLUSION ============ #}
