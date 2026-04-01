@@ -1,0 +1,1 @@
+Charge le skill pbnc-oral et commence par le premier message d'Orion.

@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Passeport Certification PBNC — Réponses candidat",
+  "type": "object",
+  "required": ["candidat", "parcours", "radar", "activites", "competences", "conclusion", "ouverture"],
+  "properties": {
+    "candidat": {
+      "type": "object",
+      "required": ["prenom", "nom", "date_naissance", "lieu_naissance"],
+      "properties": {
+        "prenom": { "type": "string" },
+        "nom": { "type": "string" },
+        "date_naissance": { "type": "string", "pattern": "^\\d{2}/\\d{2}/\\d{4}$" },
+        "lieu_naissance": { "type": "string" }
+      }
+    },
+    "parcours": {
+      "type": "object",
+      "required": ["scolaire", "professionnel", "motivations", "projet_pro"],
+      "properties": {
+        "scolaire": { "type": "string", "description": "Parcours scolaire et extra-scolaire" },
+        "professionnel": { "type": "string", "description": "Parcours professionnel et extra-professionnel" },
+        "motivations": { "type": "string", "description": "Motivations pour la certification PBNC" },
+        "projet_pro": { "type": "string", "description": "Projet professionnel" }
+      }
+    },
+    "radar": {
+      "type": "object",
+      "description": "Auto-évaluation 1-5 avant/après formation pour chaque compétence",
+      "required": ["avant", "apres"],
+      "properties": {
+        "avant": {
+          "type": "object",
+          "patternProperties": {
+            "^C\\d{1,2}$": { "type": "integer", "minimum": 1, "maximum": 5 }
+          },
+          "minProperties": 31,
+          "maxProperties": 31
+        },
+        "apres": {
+          "type": "object",
+          "patternProperties": {
+            "^C\\d{1,2}$": { "type": "integer", "minimum": 1, "maximum": 5 }
+          },
+          "minProperties": 31,
+          "maxProperties": 31
+        }
+      }
+    },
+    "activites": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["titre", "contexte", "objectifs", "methodes", "ressources", "equipe", "deroulement", "difficultes", "reflexion", "axes_amelioration"],
+        "properties": {
+          "titre": { "type": "string" },
+          "contexte": { "type": "string" },
+          "objectifs": { "type": "string" },
+          "methodes": { "type": "string" },
+          "ressources": { "type": "string" },
+          "equipe": { "type": "string" },
+          "deroulement": { "type": "string" },
+          "difficultes": { "type": "string" },
+          "reflexion": { "type": "string" },
+          "axes_amelioration": { "type": "string" },
+          "competences_couvertes": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^C\\d{1,2}$" }
+          }
+        }
+      }
+    },
+    "competences": {
+      "type": "object",
+      "description": "Clé = C1 à C31, valeur = objet avec exemple et réflexion",
+      "patternProperties": {
+        "^C\\d{1,2}$": {
+          "type": "object",
+          "required": ["titre", "exemple", "outils", "reflexion"],
+          "properties": {
+            "titre": { "type": "string", "description": "Intitulé court de la compétence" },
+            "exemple": { "type": "string", "description": "Exemple concret démontrant l'acquisition" },
+            "outils": { "type": "string", "description": "Outils et méthodes utilisés" },
+            "reflexion": { "type": "string", "description": "Recul et analyse personnelle" }
+          }
+        }
+      },
+      "minProperties": 31,
+      "maxProperties": 31
+    },
+    "conclusion": {
+      "type": "string",
+      "description": "Synthèse de l'expérience acquise (formation + pro)"
+    },
+    "ouverture": {
+      "type": "object",
+      "required": ["projet_pro", "poste_vise", "perspectives"],
+      "properties": {
+        "projet_pro": { "type": "string" },
+        "poste_vise": { "type": "string" },
+        "perspectives": { "type": "string" }
+      }
+    }
+  }
+}

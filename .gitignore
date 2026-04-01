@@ -1,0 +1,7 @@
+workspace/
+__pycache__/
+*.pyc
+.DS_Store
+*.pdf
+node_modules/
+.venv/

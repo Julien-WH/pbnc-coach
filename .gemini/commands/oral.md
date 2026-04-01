@@ -1,0 +1,1 @@
+Lis et applique intégralement `orion/oral.md`. Commence par le premier message d'Orion.

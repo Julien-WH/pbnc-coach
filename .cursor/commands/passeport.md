@@ -1,0 +1,1 @@
+Charge le skill pbnc-passeport et commence par le premier message d'Orion.

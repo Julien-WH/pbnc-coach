@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passeport de Certification — {{ candidat.prenom }} {{ candidat.nom }}</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  {# ============ COVER ============ #}
+  <div class="page cover">
+    <h1>Passeport de<br>Certification</h1>
+    <div class="subtitle">Product Builder No-Code</div>
+    <div class="candidate-info">
+      <h2>{{ candidat.prenom }} {{ candidat.nom }}</h2>
+      <p>Date et lieu de naissance : {{ candidat.date_naissance }} — {{ candidat.lieu_naissance }}</p>
+    </div>
+    <div class="badge">RNCP40677 · Niveau 6</div>
+  </div>
+
+  {# ============ PARCOURS ============ #}
+  <div class="page">
+    <div class="section-header">
+      <div class="section-number">1</div>
+      <h2>Mon parcours</h2>
+    </div>
+
+    <div class="parcours-section">
+      <h3>Parcours scolaire et extra-scolaire</h3>
+      <p>{{ parcours.scolaire }}</p>
+    </div>
+
+    <div class="parcours-section">
+      <h3>Parcours professionnel</h3>
+      <p>{{ parcours.professionnel }}</p>
+    </div>
+
+    <div class="parcours-section">
+      <h3>Motivations pour la certification</h3>
+      <p>{{ parcours.motivations }}</p>
+    </div>
+
+    <div class="parcours-section">
+      <h3>Projet professionnel</h3>
+      <p>{{ parcours.projet_pro }}</p>
+    </div>
+
+    <div class="page-footer">
+      <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
+      <span>RNCP40677</span>
+    </div>
+  </div>
+
+  {# ============ RADAR ============ #}
+  <div class="page">
+    <div class="section-header">
+      <div class="section-number">2</div>
+      <h2>Acquisition des compétences</h2>
+    </div>
+
+    <div class="radar-container">
+      {{ radar_svg }}
+    </div>
+
+    <div class="radar-legend">
+      <div class="legend-item"><div class="dot avant"></div> Avant la formation</div>
+      <div class="legend-item"><div class="dot apres"></div> Après la formation</div>
+    </div>
+
+    <div class="page-footer">
+      <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
+      <span>RNCP40677</span>
+    </div>
+  </div>
+
+  {# ============ ACTIVITÉS ============ #}
+  <div class="page">
+    <div class="section-header">
+      <div class="section-number">3</div>
+      <h2>Mes activités professionnelles</h2>
+    </div>
+
+    {% for act in activites %}
+    <div class="activity">
+      <h3>Activité {{ loop.index }} — {{ act.titre }}</h3>
+      <div class="field-grid">
+        <div class="field">
+          <div class="label">Contexte</div>
+          <p>{{ act.contexte }}</p>
+        </div>
+        <div class="field">
+          <div class="label">Objectifs</div>
+          <p>{{ act.objectifs }}</p>
+        </div>
+        <div class="field">
+          <div class="label">Méthodes</div>
+          <p>{{ act.methodes }}</p>
+        </div>
+        <div class="field">
+          <div class="label">Ressources</div>
+          <p>{{ act.ressources }}</p>
+        </div>
+        <div class="field">
+          <div class="label">Équipe</div>
+          <p>{{ act.equipe }}</p>
+        </div>
+        <div class="field">
+          <div class="label">Difficultés</div>
+          <p>{{ act.difficultes }}</p>
+        </div>
+        <div class="field full-width">
+          <div class="label">Déroulement</div>
+          <p>{{ act.deroulement }}</p>
+        </div>
+      </div>
+      <div class="reflection">
+        <div class="label">Réflexion & axes d'amélioration</div>
+        <p>{{ act.reflexion }}</p>
+        <p class="mt-4">{{ act.axes_amelioration }}</p>
+      </div>
+      {% if act.competences_couvertes %}
+      <div class="tags">
+        {% for c in act.competences_couvertes %}
+        <span class="tag">{{ c }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="page-footer">
+      <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
+      <span>RNCP40677</span>
+    </div>
+  </div>
+
+  {# ============ COMPÉTENCES ============ #}
+  {% set blocs = [
+    {"num": "1", "titre": "Concevoir des solutions no-code", "range": range(1, 8)},
+    {"num": "2", "titre": "Conduire le projet de développement", "range": [8, 9, 10, 11, 12, 13, 14, 16]},
+    {"num": "3", "titre": "Personnaliser et déployer no-code & IA", "range": range(17, 24)},
+    {"num": "4", "titre": "Pérennité du produit no-code", "range": range(24, 32)}
+  ] %}
+
+  {% for bloc in blocs %}
+  <div class="page">
+    <div class="section-header">
+      <div class="section-number">{{ loop.index + 3 }}</div>
+      <h2>Bloc {{ bloc.num }} — {{ bloc.titre }}</h2>
+    </div>
+
+    {% for i in bloc.range %}
+    {% set key = "C" ~ i %}
+    {% if key in competences %}
+    <div class="competence">
+      <span class="competence-id">{{ key }}</span>
+      <h4>{{ competences[key].titre }}</h4>
+      <div class="competence-field">
+        <div class="label">Exemple concret</div>
+        <p>{{ competences[key].exemple }}</p>
+      </div>
+      <div class="competence-field">
+        <div class="label">Outils & méthodes</div>
+        <p>{{ competences[key].outils }}</p>
+      </div>
+      <div class="competence-field">
+        <div class="label">Réflexion</div>
+        <p>{{ competences[key].reflexion }}</p>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <div class="page-footer">
+      <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
+      <span>RNCP40677</span>
+    </div>
+  </div>
+  {% endfor %}
+
+  {# ============ CONCLUSION ============ #}
+  <div class="page">
+    <div class="section-header">
+      <div class="section-number">8</div>
+      <h2>Conclusion</h2>
+    </div>
+
+    <div class="conclusion-content">
+      <p>{{ conclusion }}</p>
+    </div>
+
+    <div class="page-footer">
+      <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
+      <span>RNCP40677</span>
+    </div>
+  </div>
+
+  {# ============ OUVERTURE ============ #}
+  <div class="page">
+    <div class="section-header">
+      <div class="section-number">9</div>
+      <h2>Ouverture</h2>
+    </div>
+
+    <div class="ouverture-content">
+      <div class="field">
+        <h4>Projet professionnel</h4>
+        <p>{{ ouverture.projet_pro }}</p>
+      </div>
+      <div class="field">
+        <h4>Poste visé</h4>
+        <p>{{ ouverture.poste_vise }}</p>
+      </div>
+      <div class="field">
+        <h4>Perspectives</h4>
+        <p>{{ ouverture.perspectives }}</p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>{{ candidat.prenom }} {{ candidat.nom }} · Passeport Certification PBNC</span>
+      <span>RNCP40677</span>
+    </div>
+  </div>
+
+</body>
+</html>
